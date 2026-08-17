@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        DataMedic AI
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a
+                href="{{ url_for('index') }}"
+                class="brand"
+            >
+                <div class="brand-icon">
+                    +
+                </div>
+
+                <div>
+                    <div class="brand-name">
+                        DataMedic AI
+                    </div>
+
+                    <div class="brand-tagline">
+                        Dataset Intelligence
+                    </div>
+                </div>
+            </a>
+
+            <div class="nav-right">
+                Analysis · ML · SHAP · Reports
+            </div>
+
+        </div>
+
+    </header>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            DataMedic AI · Intelligent Dataset Analysis
+        </p>
+
+    </footer>
+
+</body>
+</html>

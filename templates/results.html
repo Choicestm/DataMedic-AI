@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Analysis Results</h1>
+
+    <p>
+        <strong>Dataset:</strong>
+        {{ dataset_name }}
+    </p>
+
+    <p>
+        <strong>Target:</strong>
+        {{ target_column }}
+    </p>
+
+    {% if original_rows > sampled_rows %}
+        <p>
+            Large dataset detected.
+            The analysis used a sample of
+            {{ sampled_rows }} rows from
+            {{ original_rows }} total rows.
+        </p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Dataset Overview</h2>
+
+    <p>
+        Rows:
+        <strong>{{ analysis.n_rows }}</strong>
+    </p>
+
+    <p>
+        Columns:
+        <strong>{{ analysis.n_columns }}</strong>
+    </p>
+
+    <p>
+        Missing values:
+        <strong>{{ analysis.n_missing }}</strong>
+    </p>
+
+    <p>
+        Duplicate rows:
+        <strong>{{ analysis.n_duplicates }}</strong>
+    </p>
+
+    <p>
+        Data quality:
+        <strong>{{ analysis.quality.score }}/100</strong>
+    </p>
+
+    <hr>
+
+    <h2>Machine Learning</h2>
+
+    <p>
+        Problem Type:
+        <strong>
+            {{ training.problem_type|capitalize }}
+        </strong>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Metrics</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for model in model_results %}
+
+            <tr>
+                <td>
+                    {{ model.name }}
+
+                    {% if model.is_best %}
+                        <strong>
+                            — Best Model
+                        </strong>
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    {% for metric_name, metric_value in model.metrics.items() %}
+
+                        <div>
+                            {{ metric_name|upper }}:
+                            {{ "%.4f"|format(metric_value) }}
+                        </div>
+
+                    {% endfor %}
+
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Best Model</h2>
+
+    <p>
+        <strong>
+            {{ training.best_model_name }}
+        </strong>
+    </p>
+
+    <hr>
+
+    <h2>Explainable AI / SHAP</h2>
+
+    <p>
+        These features had the strongest influence
+        on the selected model.
+    </p>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Feature</th>
+                <th>Importance</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for feature in top_features %}
+
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ feature.feature }}</td>
+                <td>
+                    {{ "%.4f"|format(feature.importance) }}
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <h2>Download Report</h2>
+
+    <form
+        method="POST"
+        action="{{ url_for('download_report') }}"
+    >
+
+        <label for="report_name">
+            Report name
+        </label>
+
+        <input
+            type="text"
+            id="report_name"
+            name="report_name"
+            placeholder="e.g. Collision Analysis Report"
+        >
+
+        <button type="submit">
+            Download PDF Report
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

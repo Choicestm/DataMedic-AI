@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Select Target Column</h1>
+
+    <p>
+        <strong>Dataset:</strong>
+        {{ dataset_name }}
+    </p>
+
+    <h2>Dataset Overview</h2>
+
+    <p>
+        Rows:
+        {{ analysis.n_rows }}
+    </p>
+
+    <p>
+        Columns:
+        {{ analysis.n_columns }}
+    </p>
+
+    <p>
+        Missing values:
+        {{ analysis.n_missing }}
+    </p>
+
+    <p>
+        Duplicate rows:
+        {{ analysis.n_duplicates }}
+    </p>
+
+    <p>
+        Data quality:
+        {{ analysis.quality.score }}/100
+    </p>
+
+    <hr>
+
+    <form method="POST">
+
+        <label for="target_column">
+            Select target column
+        </label>
+
+        <select
+            id="target_column"
+            name="target_column"
+            required
+        >
+
+            <option value="">
+                Choose a target
+            </option>
+
+            {% for column in columns %}
+
+            <option value="{{ column }}">
+                {{ column }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+            Run Analysis
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}
+DataMedic AI
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-badge">
+        AI-Powered Dataset Analysis
+    </div>
+
+    <h1>
+        Understand your data
+        <span>before building your model.</span>
+    </h1>
+
+    <p class="hero-description">
+        Upload a CSV dataset and DataMedic AI will analyse
+        its quality, compare machine-learning models,
+        explain the best model with SHAP, and generate
+        a downloadable PDF report.
+    </p>
+
+
+    <div class="upload-card">
+
+        <div class="upload-icon">
+            ↑
+        </div>
+
+        <h2>
+            Upload your dataset
+        </h2>
+
+        <p>
+            Select a CSV file to begin your analysis.
+        </p>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <label
+                class="file-upload"
+                for="dataset"
+            >
+
+                <span class="file-main-text">
+                    Choose CSV File
+                </span>
+
+                <span class="file-small-text">
+                    CSV files supported
+                </span>
+
+            </label>
+
+            <input
+                type="file"
+                id="dataset"
+                name="dataset"
+                accept=".csv"
+                required
+            >
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Analyse Dataset →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="feature-section">
+
+    <div class="feature-card">
+
+        <div class="feature-number">
+            01
+        </div>
+
+        <h3>
+            Data Quality
+        </h3>
+
+        <p>
+            Detect missing values, duplicates,
+            outliers and data-quality issues.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-number">
+            02
+        </div>
+
+        <h3>
+            Machine Learning
+        </h3>
+
+        <p>
+            Automatically compare suitable
+            classification or regression models.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-number">
+            03
+        </div>
+
+        <h3>
+            Explainable AI
+        </h3>
+
+        <p>
+            Understand the most influential
+            features using SHAP.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-number">
+            04
+        </div>
+
+        <h3>
+            PDF Report
+        </h3>
+
+        <p>
+            Generate a clear downloadable
+            report containing the results.
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
